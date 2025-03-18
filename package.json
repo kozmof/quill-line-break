@@ -1,0 +1,65 @@
+{
+  "name": "quill-line-break",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "keywords": [
+    "Quill",
+    "quill",
+    "Editor",
+    "editor",
+    "WYSIWYG",
+    "wysiwyg",
+    "wrapper",
+    "text editor",
+    "rich text",
+    "line",
+    "text",
+    "break",
+    "newline"
+  ],
+  "homepage": "https://github.com/kozmof/quill-line-break",
+  "repository": {
+    "type": "github",
+    "url": "git+https://github.com/kozmof/quill-line-break.git"
+  },
+  "author": {
+    "name": "Kozo Oeda"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "vite build && tsc",
+    "lint": "eslint .",
+    "pack:home": "npm pack --pack-destination ~",
+    "pack:check": "npm run pack:home && npm run pack:check::compare",
+    "preflight": "npm publish --dry-run",
+    "pack:check::name": "v=$(echo $npm_package_version) && name='quill-line-break-'$v && echo $name",
+    "pack:check::counts": "name=$(npm run --silent pack:check::name) && echo $(tar -tzf ~/$name.tgz | wc -l)",
+    "pack:check::compare": "counts=$(npm run --silent pack:check::counts) && if [ $counts -ne 14 ]; then echo ERROR: check files in tgz; exit 1; else echo OK; fi"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.22.0",
+    "@stylistic/eslint-plugin-ts": "^4.2.0",
+    "eslint": "^9.22.0",
+    "typescript": "~5.7.2",
+    "typescript-eslint": "^8.26.1",
+    "vite": "^6.2.0"
+  },
+  "dependencies": {
+    "quill": "^2.0.3"
+  },
+  "main": "./dist/index.umd.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "require": "./dist/index.umd.cjs",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "!dist/types/vitest.setup.d.ts"
+  ]
+}
