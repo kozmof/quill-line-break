@@ -9,14 +9,14 @@ import Block from 'quill/blots/block';
 export class LineBreakScroll extends Scroll {
   prevValue: string;
 
-  constructor(registry: Registry, domNode: HTMLDivElement, { emitter }: {
+  constructor (registry: Registry, domNode: HTMLDivElement, { emitter }: {
     emitter: Emitter;
   }) {
     super(registry, domNode, { emitter });
     this.prevValue = '';
   }
 
-  insertAt(index: number, value: string, def?: unknown): void {
+  insertAt (index: number, value: string, def?: unknown): void {
     const lineBreakSplit = value.split('\n');
     let offset = index;
 
@@ -48,7 +48,7 @@ export class LineBreakScroll extends Scroll {
     this.prevValue = value;
   }
 
-  insertContents(index: number, delta: Delta): void {
+  insertContents (index: number, delta: Delta): void {
     const inserts = delta.ops.map(op => op.insert);
     for (const insert of inserts) {
       if (typeof insert === 'string') {

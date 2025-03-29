@@ -2,14 +2,16 @@ import { EmbedBlot } from 'parchment';
 
 export class LineBreak extends EmbedBlot {
   static blotName = 'line-break';
+
   static className = 'ql-line-break';
+
   static tagName = 'br';
 
-  value() {
+  value () {
     return '\n';
   }
 
-  length(): number {
+  length (): number {
     return 1;
   }
 }

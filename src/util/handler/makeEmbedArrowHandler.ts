@@ -3,7 +3,7 @@ import Quill from 'quill';
 import { EmbedBlot } from 'parchment';
 
 
-export function makeEmbedLineArrowHandler(
+export function makeEmbedLineArrowHandler (
   key: string,
   shiftKey: boolean | null
 ): BindingObject {
@@ -14,7 +14,7 @@ export function makeEmbedLineArrowHandler(
     shiftKey,
     altKey: null,
     [where]: pattern,
-    handler(range) {
+    handler (range) {
       let { index } = range;
       if (key === 'ArrowRight') {
         index += range.length + 1;

@@ -30,6 +30,7 @@
   "scripts": {
     "build": "vite build && tsc",
     "lint": "eslint .",
+    "test": "vitest",
     "pack:home": "npm pack --pack-destination ~",
     "pack:check": "npm run pack:home && npm run pack:check::compare",
     "preflight": "npm publish --dry-run",
@@ -43,9 +44,11 @@
     "eslint": "^9.22.0",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.26.1",
-    "vite": "^6.2.0"
+    "vite": "^6.2.0",
+    "vitest": "^3.0.9"
   },
   "dependencies": {
+    "jsdom": "^26.0.0",
     "quill": "^2.0.3"
   },
   "main": "./dist/index.umd.cjs",
