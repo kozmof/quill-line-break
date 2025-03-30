@@ -7,20 +7,12 @@ class FromHTML {
   private quill: Quill;
 
   constructor (html: string) {
-    this.cleanup();
     this.quill = createLineBreakQuill(html);
-  }
-
-  private cleanup () {
-    const children = document.body.children;
-    for (const child of children) {
-      child.remove();
-    }
   }
 
   isCompatWith (delta: Delta) {
     expect(delta).toEqual(this.quill.editor.getDelta());
-
+    return new FromDelta(delta);
   }
 
   debug () {
