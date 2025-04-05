@@ -31,12 +31,13 @@
     "build": "vite build && tsc",
     "lint": "eslint .",
     "test": "vitest",
+    "prepack": "npm run build",
     "pack:home": "npm pack --pack-destination ~",
     "pack:check": "npm run pack:home && npm run pack:check::compare",
     "preflight": "npm publish --dry-run",
     "pack:check::name": "v=$(echo $npm_package_version) && name='quill-line-break-'$v && echo $name",
     "pack:check::counts": "name=$(npm run --silent pack:check::name) && echo $(tar -tzf ~/$name.tgz | wc -l)",
-    "pack:check::compare": "counts=$(npm run --silent pack:check::counts) && if [ $counts -ne 14 ]; then echo ERROR: check files in tgz; exit 1; else echo OK; fi"
+    "pack:check::compare": "counts=$(npm run --silent pack:check::counts) && if [ $counts -ne 16 ]; then echo ERROR: check files in tgz; exit 1; else echo OK; fi"
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
@@ -63,6 +64,7 @@
   },
   "files": [
     "dist",
-    "!dist/types/vitest.setup.d.ts"
+    "!dist/types/vitest.setup.d.ts",
+    "!dist/types/tests"
   ]
 }

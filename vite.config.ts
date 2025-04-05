@@ -20,7 +20,8 @@ export default defineConfig({
           parchment: 'Parchment',
           'quill/modules/clipboard': 'Clipboard',
           'quill/blots/scroll': 'Scroll',
-          'quill/blots/block': 'Block'
+          'quill/blots/block': 'Block',
+          'quill/blots/cursor': 'Cursor',
         }
       },
       external: [
@@ -28,7 +29,8 @@ export default defineConfig({
         'parchment',
         'quill/modules/clipboard',
         'quill/blots/scroll',
-        'quill/blots/block'
+        'quill/blots/block',
+        'quill/blots/cursor',
       ]
     }
   }
