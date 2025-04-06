@@ -26,7 +26,7 @@ export interface BindingObject extends Omit<BindingBase, 'key'> {
   shortKey?: boolean | null;
 }
 
-type Bindings = Record<string, BindingObject>;
+export type Bindings = Record<string, BindingObject>;
 
 export const createLineBreakBindings = (): Bindings => {
   return {
