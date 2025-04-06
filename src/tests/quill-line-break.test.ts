@@ -1,4 +1,4 @@
-import { describe, test } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { Delta } from 'quill';
 import { inspect } from './utils/inspect';
 
@@ -81,12 +81,11 @@ describe('Check Delta to HTML, HTML to Delta', () => {
         .insert('Hello\n\n\n\nQuill')
     )
       .toBe('<p>Hello<br class="ql-line-break"></p><p><br class="ql-line-break"></p><p>Quill</p>')
-      // An empty paragraph will be removed 
       .isCompatWith(
         new Delta()
-          .insert('Hello\n\nQuill\n\n')
+          .insert('Hello\n\n\n\nQuill\n\n')
       )
-      .toBe('<p>Hello<br class="ql-line-break"></p><p>Quill<br class="ql-line-break"></p>');
+      .toBe('<p>Hello<br class="ql-line-break"></p><p><br class="ql-line-break"></p><p>Quill<br class="ql-line-break"></p>');
   });
 
   test('four `\\n`s separate paragraphs (2)', () => {
@@ -95,12 +94,11 @@ describe('Check Delta to HTML, HTML to Delta', () => {
         .insert('Hello\n\n\n\nQuill\n\n')
     )
       .toBe('<p>Hello<br class="ql-line-break"></p><p><br class="ql-line-break"></p><p>Quill<br class="ql-line-break"></p>')
-      // An empty paragraph will be removed 
       .isCompatWith(
         new Delta()
-          .insert('Hello\n\nQuill\n\n')
+          .insert('Hello\n\n\n\nQuill\n\n')
       )
-      .toBe('<p>Hello<br class="ql-line-break"></p><p>Quill<br class="ql-line-break"></p>');
+      .toBe('<p>Hello<br class="ql-line-break"></p><p><br class="ql-line-break"></p><p>Quill<br class="ql-line-break"></p>');
   });
 
   test('five `\\n`s separate paragraphs (1)', () => {
@@ -109,12 +107,11 @@ describe('Check Delta to HTML, HTML to Delta', () => {
         .insert('Hello\n\n\n\n\nQuill')
     )
       .toBe('<p>Hello<br class="ql-line-break"></p><p><br class="ql-line-break"></p><p><br class="ql-line-break">Quill</p>')
-      // An empty paragraph will be removed 
       .isCompatWith(
         new Delta()
-          .insert('Hello\n\n\nQuill\n\n')
+          .insert('Hello\n\n\n\n\nQuill\n\n')
       )
-      .toBe('<p>Hello<br class="ql-line-break"></p><p><br class="ql-line-break">Quill<br class="ql-line-break"></p>');
+      .toBe('<p>Hello<br class="ql-line-break"></p><p><br class="ql-line-break"></p><p><br class="ql-line-break">Quill<br class="ql-line-break"></p>');
   });
 
   test('five `\\n`s separate paragraphs (2)', () => {
@@ -123,12 +120,11 @@ describe('Check Delta to HTML, HTML to Delta', () => {
         .insert('Hello\n\n\n\n\nQuill\n\n')
     )
       .toBe('<p>Hello<br class="ql-line-break"></p><p><br class="ql-line-break"></p><p><br class="ql-line-break">Quill<br class="ql-line-break"></p>')
-      // An empty paragraph will be removed 
       .isCompatWith(
         new Delta()
-          .insert('Hello\n\n\nQuill\n\n')
+          .insert('Hello\n\n\n\n\nQuill\n\n')
       )
-      .toBe('<p>Hello<br class="ql-line-break"></p><p><br class="ql-line-break">Quill<br class="ql-line-break"></p>');
+      .toBe('<p>Hello<br class="ql-line-break"></p><p><br class="ql-line-break"></p><p><br class="ql-line-break">Quill<br class="ql-line-break"></p>');
   });
 
   test('six `\\n`s separate paragraphs (1)', () => {
@@ -137,12 +133,11 @@ describe('Check Delta to HTML, HTML to Delta', () => {
         .insert('Hello\n\n\n\n\n\nQuill')
     )
       .toBe('<p>Hello<br class="ql-line-break"></p><p><br class="ql-line-break"></p><p><br class="ql-line-break"></p><p>Quill</p>')
-      // An empty paragraph will be removed 
       .isCompatWith(
         new Delta()
-          .insert('Hello\n\nQuill\n\n')
+          .insert('Hello\n\n\n\n\n\nQuill\n\n')
       )
-      .toBe('<p>Hello<br class="ql-line-break"></p><p>Quill<br class="ql-line-break"></p>');
+      .toBe('<p>Hello<br class="ql-line-break"></p><p><br class="ql-line-break"></p><p><br class="ql-line-break"></p><p>Quill<br class="ql-line-break"></p>');
   });
 
   test('six `\\n`s separate paragraphs (2)', () => {
@@ -151,12 +146,11 @@ describe('Check Delta to HTML, HTML to Delta', () => {
         .insert('Hello\n\n\n\n\n\nQuill\n\n')
     )
       .toBe('<p>Hello<br class="ql-line-break"></p><p><br class="ql-line-break"></p><p><br class="ql-line-break"></p><p>Quill<br class="ql-line-break"></p>')
-      // An empty paragraph will be removed 
       .isCompatWith(
         new Delta()
-          .insert('Hello\n\nQuill\n\n')
+          .insert('Hello\n\n\n\n\n\nQuill\n\n')
       )
-      .toBe('<p>Hello<br class="ql-line-break"></p><p>Quill<br class="ql-line-break"></p>');
+      .toBe('<p>Hello<br class="ql-line-break"></p><p><br class="ql-line-break"></p><p><br class="ql-line-break"></p><p>Quill<br class="ql-line-break"></p>');
   });
 });
 
@@ -188,9 +182,8 @@ describe('Key events', () => {
             .insert('\n\nHello Quill\n')
         )
         .toBe('<p><br class="ql-line-break"></p><p>Hello Quill</p>')
-        // An empty paragraph will be removed 
         .isCompatWith(
-          new Delta().insert('Hello Quill\n\n')
+          new Delta().insert('\n\nHello Quill\n\n')
         );
     });
 
@@ -204,10 +197,9 @@ describe('Key events', () => {
             .insert('\n\n\nHello Quill\n')
         )
         .toBe('<p><br class="ql-line-break"></p><p><br class="ql-line-break">Hello Quill</p>')
-        // An empty paragraph will be removed 
         .isCompatWith(
           new Delta()
-            .insert('\nHello Quill\n\n')
+            .insert('\n\n\nHello Quill\n\n')
         );
     });
 
@@ -223,7 +215,7 @@ describe('Key events', () => {
         .toBe('<p><br class="ql-line-break"></p><p><br class="ql-line-break"></p><p>Hello Quill</p>')
         .isCompatWith(
           new Delta()
-            .insert('Hello Quill\n\n')
+            .insert('\n\n\n\nHello Quill\n\n')
         );
     });
 
@@ -278,9 +270,8 @@ describe('Key events', () => {
           new Delta().insert('Hello\n\n\n\n Quill\n')
         )
         .toBe('<p>Hello<br class="ql-line-break"></p><p><br class="ql-line-break"></p><p> Quill</p>')
-        // An empty paragraph will be removed 
         .isCompatWith(
-          new Delta().insert('Hello\n\nQuill\n\n')
+          new Delta().insert('Hello\n\n\n\nQuill\n\n')
         );
     });
 
@@ -308,7 +299,7 @@ describe('Key events', () => {
         )
         .toBe('<p>Hello Quill<br class="ql-line-break"></p><p><br class="ql-line-break"></p>')
         .isCompatWith(
-          new Delta().insert('Hello Quill\n\n')
+          new Delta().insert('Hello Quill\n\n\n\n')
         );
     });
 
@@ -320,9 +311,10 @@ describe('Key events', () => {
         .isFinallyEq(
           new Delta().insert('Hello Quill\n\n\n\n\n')
         )
-        .toBe('<p>Hello Quill<br class="ql-line-break"></p><p><br></p><p><br class="ql-line-break"></p>')
+        .toBe('<p>Hello Quill<br class="ql-line-break"></p><p><br class="ql-line-break"><br class="ql-line-break"></p>')
+        // remove the last '\n'
         .isCompatWith(
-          new Delta().insert('Hello Quill\n\n')
+          new Delta().insert('Hello Quill\n\n\n\n')
         );
     });
 
@@ -334,10 +326,236 @@ describe('Key events', () => {
         .isFinallyEq(
           new Delta().insert('Hello Quill\n\n\n\n\n\n')
         )
-        .toBe('<p>Hello Quill<br class="ql-line-break"></p><p><br></p><p><br></p><p><br class="ql-line-break"></p>')
+        .toBe('<p>Hello Quill<br class="ql-line-break"></p><p><br class="ql-line-break"></p><p><br class="ql-line-break"></p>')
         .isCompatWith(
-          new Delta().insert('Hello Quill\n\n')
+          new Delta().insert('Hello Quill\n\n\n\n\n\n')
         );
     });
+  });
+});
+
+describe('paste text', () => {
+  test('paste 1', async () => {
+    const clipboardEvent = {
+      clipboardData: {
+        getData: (type: string) =>
+          type === 'text/html' ? '' : 'line1\nline2'
+      },
+      preventDefault: () => {
+        return; 
+      }
+    } as ClipboardEvent;
+    inspect(new Delta())
+      .focus()
+      .paste(clipboardEvent)
+      .toBe('<p>line1<br class="ql-line-break">line2</p>')
+      .isCompatWith(
+        new Delta().insert('line1\nline2\n\n')
+      );
+  });
+
+  test('paste 2', async () => {
+    const clipboardEvent = {
+      clipboardData: {
+        getData: (type: string) =>
+          type === 'text/html' ? '' : 'line1\n\nline2'
+      },
+      preventDefault: () => {
+        return; 
+      }
+    } as ClipboardEvent;
+    inspect(new Delta())
+      .focus()
+      .paste(clipboardEvent)
+      .toBe('<p>line1<br class="ql-line-break"></p><p>line2</p>')
+      .isCompatWith(
+        new Delta().insert('line1\n\nline2\n\n')
+      );
+  });
+
+  test('paste 3', async () => {
+    const clipboardEvent = {
+      clipboardData: {
+        getData: (type: string) =>
+          type === 'text/html' ? '' : 'line1\n\n\nline2'
+      },
+      preventDefault: () => {
+        return; 
+      }
+    } as ClipboardEvent;
+    inspect(new Delta())
+      .focus()
+      .paste(clipboardEvent)
+      .toBe('<p>line1<br class="ql-line-break"></p><p><br class="ql-line-break">line2</p>')
+      .isCompatWith(
+        new Delta().insert('line1\n\n\nline2\n\n')
+      );
+  });
+
+  test('paste 4', async () => {
+    const clipboardEvent = {
+      clipboardData: {
+        getData: (type: string) =>
+          type === 'text/html' ? '' : 'line1\n\n\n\nline2'
+      },
+      preventDefault: () => {
+        return; 
+      }
+    } as ClipboardEvent;
+    inspect(new Delta())
+      .focus()
+      .paste(clipboardEvent)
+      .toBe('<p>line1<br class="ql-line-break"></p><p><br class="ql-line-break"></p><p>line2</p>')
+      .isCompatWith(
+        new Delta().insert('line1\n\n\n\nline2\n\n')
+      );
+  });
+});
+
+describe('paste html', () => {
+  test('paste 1', async () => {
+    const clipboardEvent = {
+      clipboardData: {
+        getData: (type: string) =>
+          type === 'text/html' ? 'line1<br>line2' : ''
+      },
+      preventDefault: () => {
+        return; 
+      }
+    } as ClipboardEvent;
+    inspect(new Delta())
+      .focus()
+      .paste(clipboardEvent)
+      .toBe('<p>line1<br class="ql-line-break">line2</p>')
+      .isCompatWith(
+        new Delta().insert('line1\nline2\n\n')
+      );
+  });
+
+  test('paste 2', async () => {
+    const clipboardEvent = {
+      clipboardData: {
+        getData: (type: string) =>
+          type === 'text/html' ? 'line1<br/><br>line2' : ''
+      },
+      preventDefault: () => {
+        return; 
+      }
+    } as ClipboardEvent;
+    inspect(new Delta())
+      .focus()
+      .paste(clipboardEvent)
+      .toBe('<p>line1<br class="ql-line-break"></p><p>line2</p>')
+      .isCompatWith(
+        new Delta().insert('line1\n\nline2\n\n')
+      );
+  });
+
+  test('paste 3', async () => {
+    const clipboardEvent = {
+      clipboardData: {
+        getData: (type: string) =>
+          type === 'text/html' ? 'line1<br><br/><br>line2' : ''
+      },
+      preventDefault: () => {
+        return; 
+      }
+    } as ClipboardEvent;
+    inspect(new Delta())
+      .focus()
+      .paste(clipboardEvent)
+      .toBe('<p>line1<br class="ql-line-break"></p><p><br class="ql-line-break">line2</p>')
+      .isCompatWith(
+        new Delta().insert('line1\n\n\nline2\n\n')
+      );
+  });
+
+  test('paste 4', async () => {
+    const clipboardEvent = {
+      clipboardData: {
+        getData: (type: string) =>
+          type === 'text/html' ? 'line1<br/><br><br/><br/>line2' : ''
+      },
+      preventDefault: () => {
+        return; 
+      }
+    } as ClipboardEvent;
+    inspect(new Delta())
+      .focus()
+      .paste(clipboardEvent)
+      .toBe('<p>line1<br class="ql-line-break"></p><p><br class="ql-line-break"></p><p>line2</p>')
+      .isCompatWith(
+        new Delta().insert('line1\n\n\n\nline2\n\n')
+      );
+  });
+});
+
+describe('copy', () => {
+  const setup = () => {
+    const clipboardData: Record<string, string> = {};
+    const clipboardEvent = {
+      clipboardData: {
+        setData: (type, data) => {
+          clipboardData[type] = data;
+        }
+      },
+      preventDefault: () => {
+        return; 
+      }
+    } as ClipboardEvent;
+    return { clipboardData,
+      clipboardEvent };
+  };
+
+  test('copy 1', () => {
+    const { clipboardData, clipboardEvent } = setup();
+    inspect(
+      new Delta()
+        .insert('Hello\nQuill')
+    )
+      .select(0, 11)
+      .copy(clipboardEvent);
+
+    expect(clipboardData['text/html']).toBe('Hello<br class="ql-line-break">Quill');
+    expect(clipboardData['text/plain']).toBe('Hello\nQuill');
+  });
+
+  test('copy 2', () => {
+    const { clipboardData, clipboardEvent } = setup();
+    inspect(
+      new Delta()
+        .insert('Hello\n\nQuill')
+    )
+      .select(0, 12)
+      .copy(clipboardEvent);
+
+    expect(clipboardData['text/html']).toBe('<p>Hello<br class="ql-line-break"></p><p>Quill</p>');
+    expect(clipboardData['text/plain']).toBe('Hello\n\nQuill');
+  });
+
+  test('copy 3', () => {
+    const { clipboardData, clipboardEvent } = setup();
+    inspect(
+      new Delta()
+        .insert('Hello\n\n\nQuill')
+    )
+      .select(0, 13)
+      .copy(clipboardEvent);
+
+    expect(clipboardData['text/html']).toBe('<p>Hello<br class="ql-line-break"></p><p><br class="ql-line-break">Quill</p>');
+    expect(clipboardData['text/plain']).toBe('Hello\n\n\nQuill');
+  });
+
+  test('copy 4', () => {
+    const { clipboardData, clipboardEvent } = setup();
+    inspect(
+      new Delta()
+        .insert('Hello\n\n\n\nQuill')
+    )
+      .select(0, 14)
+      .copy(clipboardEvent);
+
+    expect(clipboardData['text/html']).toBe('<p>Hello<br class="ql-line-break"></p><p><br class="ql-line-break"></p><p>Quill</p>');
+    expect(clipboardData['text/plain']).toBe('Hello\n\n\n\nQuill');
   });
 });

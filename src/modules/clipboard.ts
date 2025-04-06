@@ -9,8 +9,16 @@ interface ClipboardOptions {
   matchers: [Selector, Matcher][];
 }
 
+const isEmptyParagraph = (node: Node) => {
+  if (node.nextSibling !== null && node.nodeName === 'P' && node.childNodes.length === 1 && node.childNodes[0].nodeName === 'BR') {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 const lineBreakMatchBlot = (node: Node, delta: Delta, scroll: ScrollBlot) => {
-  if (delta.ops.length === 1 && delta.ops[0].insert === '\n') {
+  if (delta.ops.length === 1 && delta.ops[0].insert === '\n' && !isEmptyParagraph(node)) {
     return new Delta();
   }
 

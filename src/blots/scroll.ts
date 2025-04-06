@@ -19,6 +19,7 @@ export class LineBreakScroll extends Scroll {
   insertAt (index: number, value: string, def?: unknown): void {
     const lineBreakSplit = value.split('\n');
     let offset = index;
+    let isParagraph = false;
 
     // the value has '\n' but it is not equal to '\n'.
     if (value !== '\n' && lineBreakSplit.length > 1) {
@@ -33,6 +34,7 @@ export class LineBreakScroll extends Scroll {
           if (index !== lineBreakSplit.length - 1) {
             super.insertAt(offset, '\n', def);
             offset += 1;
+            isParagraph = true;
           }
         }
       });
@@ -42,10 +44,17 @@ export class LineBreakScroll extends Scroll {
         super.insertAt(offset, LineBreak.blotName, true);
         // Paragraph or Normal text
       } else {
+        if (value === '\n') {
+          isParagraph = true;
+        }
         super.insertAt(index, value, def);
       }
     }
-    this.prevValue = value;
+    if (isParagraph) {
+      this.prevValue = '';
+    } else {
+      this.prevValue = value;
+    }
   }
 
   insertContents (index: number, delta: Delta): void {
@@ -54,6 +63,12 @@ export class LineBreakScroll extends Scroll {
       if (typeof insert === 'string') {
         const breakSplit = insert.split('\n\n').reverse();
         for (let i = 0; i < breakSplit.length; i++) {
+          if (breakSplit.length === 1 && breakSplit[0] === '') {
+            super.insertAt(index, Block.blotName, true);
+            super.insertAt(index, LineBreak.blotName, true);
+            return;
+          }
+
           if (i !== 0) {
             super.insertAt(index, Block.blotName, true);
             super.insertAt(index, LineBreak.blotName, true);

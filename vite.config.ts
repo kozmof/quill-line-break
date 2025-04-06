@@ -21,7 +21,7 @@ export default defineConfig({
           'quill/modules/clipboard': 'Clipboard',
           'quill/blots/scroll': 'Scroll',
           'quill/blots/block': 'Block',
-          'quill/blots/cursor': 'Cursor',
+          'quill/blots/cursor': 'Cursor'
         }
       },
       external: [
@@ -30,7 +30,7 @@ export default defineConfig({
         'quill/modules/clipboard',
         'quill/blots/scroll',
         'quill/blots/block',
-        'quill/blots/cursor',
+        'quill/blots/cursor'
       ]
     }
   }

@@ -16,7 +16,7 @@ class FromHTML {
   }
 
   debug () {
-    console.log('Delta:', this.quill.editor.getDelta());
+    console.log('Delta:', JSON.stringify(this.quill.editor.getDelta()));
     console.log('DOM:', this.quill.root.innerHTML);
     return this;
   }
@@ -63,8 +63,18 @@ class FromDelta {
     return this;
   }
 
+  paste (clipboardEvent: ClipboardEvent) {
+    this.quill.clipboard.onCapturePaste(clipboardEvent);
+    return this;
+  }
+
+  copy (clipboardEvent: ClipboardEvent) {
+    this.quill.clipboard.onCaptureCopy(clipboardEvent, true);
+    return this;
+  }
+
   debug () {
-    console.log('Delta:', this.quill.editor.getDelta());
+    console.log('Delta:', JSON.stringify(this.quill.editor.getDelta()));
     console.log('DOM:', this.quill.root.innerHTML);
     return this;
   }
