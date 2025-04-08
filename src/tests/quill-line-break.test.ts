@@ -326,7 +326,7 @@ describe('Key events', () => {
         .isFinallyEq(
           new Delta().insert('Hello Quill\n\n\n\n\n\n')
         )
-        .toBe('<p>Hello Quill<br class="ql-line-break"></p><p><br class="ql-line-break"></p><p><br class="ql-line-break"></p>')
+        .toBe('<p>Hello Quill<br class="ql-line-break"></p><p><br class="ql-line-break"><br class="ql-line-break"><br class="ql-line-break"></p>')
         .isCompatWith(
           new Delta().insert('Hello Quill\n\n\n\n\n\n')
         );

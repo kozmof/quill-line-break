@@ -6,8 +6,8 @@ import { LineBreakCursor } from '../blots/cursor';
 
 
 export const registerLineBreak = () => {
-  Quill.register(LineBreak);
   Quill.register('modules/clipboard', LineBreakClipboard, true);
   Quill.register('blots/scroll', LineBreakScroll, true);
   Quill.register('blots/cursor', LineBreakCursor, true);
+  Quill.register('blots/break', LineBreak, true);
 };

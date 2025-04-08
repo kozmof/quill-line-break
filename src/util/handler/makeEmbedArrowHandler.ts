@@ -3,7 +3,7 @@ import Quill from 'quill';
 import { EmbedBlot } from 'parchment';
 
 
-export function makeEmbedLineArrowHandler (
+export function makeLineBreakEmbedArrowHandler (
   key: string,
   shiftKey: boolean | null
 ): BindingObject {

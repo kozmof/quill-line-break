@@ -2,7 +2,7 @@ export { LineBreak } from './blots/lineBreak';
 export { LineBreakClipboard } from './modules/clipboard';
 export { LineBreakScroll } from './blots/scroll';
 export { LineBreakCursor } from './blots/cursor';
-export { makeEmbedLineArrowHandler } from './util/handler/makeEmbedArrowHandler';
+export { makeLineBreakEmbedArrowHandler } from './util/handler/makeEmbedArrowHandler';
 export { makeEnterHandler } from './util/handler/makeEnterHandler';
 export { createLineBreakBindings } from './util/bindings';
 export { registerLineBreak } from './util/registerLineBreak';

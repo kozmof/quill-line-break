@@ -1,6 +1,6 @@
 import Quill, { type Range } from 'quill';
 import { type Context } from 'quill/modules/keyboard';
-import { makeEmbedLineArrowHandler } from './handler/makeEmbedArrowHandler';
+import { makeLineBreakEmbedArrowHandler } from './handler/makeEmbedArrowHandler';
 import { makeEnterHandler } from './handler/makeEnterHandler';
 
 interface BindingBase
@@ -30,10 +30,10 @@ export type Bindings = Record<string, BindingObject>;
 
 export const createLineBreakBindings = (): Bindings => {
   return {
-    'embed right': makeEmbedLineArrowHandler('ArrowRight', false),
-    'embed right shift': makeEmbedLineArrowHandler('ArrowRight', true),
-    'embed left': makeEmbedLineArrowHandler('ArrowLeft', false),
-    'embed left shift': makeEmbedLineArrowHandler('ArrowLeft', true),
+    'embed right': makeLineBreakEmbedArrowHandler('ArrowRight', false),
+    'embed right shift': makeLineBreakEmbedArrowHandler('ArrowRight', true),
+    'embed left': makeLineBreakEmbedArrowHandler('ArrowLeft', false),
+    'embed left shift': makeLineBreakEmbedArrowHandler('ArrowLeft', true),
     enter: makeEnterHandler()
   };
 };

@@ -20,6 +20,13 @@ export class LineBreakScroll extends Scroll {
     const lineBreakSplit = value.split('\n');
     let offset = index;
     let isParagraph = false;
+    let isNextBlotLineBreak = false;
+
+    const next = this.path(index + 1).pop();
+    if (next) {
+      const blot = next[0];
+      isNextBlotLineBreak = blot.statics.blotName === LineBreak.blotName && value === '\n' && this.prevValue === '\n';
+    }
 
     // the value has '\n' but it is not equal to '\n'.
     if (value !== '\n' && lineBreakSplit.length > 1) {
@@ -40,17 +47,22 @@ export class LineBreakScroll extends Scroll {
       });
     } else {
       // Line Break
-      if (this.prevValue !== LineBreak.blotName && this.prevValue !== '\n' && value == '\n') {
+      if (this.prevValue !== LineBreak.blotName && this.prevValue !== '\n' && (value === '\n' || value === LineBreak.blotName)) {
         super.insertAt(offset, LineBreak.blotName, true);
-        // Paragraph or Normal text
       } else {
         if (value === '\n') {
-          isParagraph = true;
+          if (!isNextBlotLineBreak) {
+            isParagraph = true;
+            super.insertAt(index, value, def);
+          } else {
+            super.insertAt(index, LineBreak.blotName, true);
+          }
+        } else {
+          super.insertAt(index, value, def);
         }
-        super.insertAt(index, value, def);
       }
     }
-    if (isParagraph) {
+    if (isParagraph && !isNextBlotLineBreak) {
       this.prevValue = '';
     } else {
       this.prevValue = value;
