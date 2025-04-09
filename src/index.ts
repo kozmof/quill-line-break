@@ -4,6 +4,4 @@ export { LineBreakScroll } from './blots/scroll';
 export { LineBreakCursor } from './blots/cursor';
 export { makeLineBreakEmbedArrowHandler } from './util/handler/makeEmbedArrowHandler';
 export { makeEnterHandler } from './util/handler/makeEnterHandler';
-export { createLineBreakBindings } from './util/bindings';
-export { registerLineBreak } from './util/registerLineBreak';
 export { setupLineBreak } from './util/setupLineBreak';
