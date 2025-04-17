@@ -7,69 +7,90 @@ import Block from 'quill/blots/block';
 
 
 export class LineBreakScroll extends Scroll {
-  prevValue: string;
 
-  constructor (registry: Registry, domNode: HTMLDivElement, { emitter }: {
+  constructor(registry: Registry, domNode: HTMLDivElement, { emitter }: {
     emitter: Emitter;
   }) {
     super(registry, domNode, { emitter });
-    this.prevValue = '';
   }
 
-  insertAt (index: number, value: string, def?: unknown): void {
-    const lineBreakSplit = value.split('\n');
-    let offset = index;
-    let isParagraph = false;
-    let isNextBlotLineBreak = false;
+  insertAt(index: number, value: string, def?: unknown): void {
+    if (value === '\n') {
+      const next = this.path(index + 1).pop();
+      const current = this.path(index).pop();
+      const prev = this.path(index - 1).pop();
 
-    const next = this.path(index + 1).pop();
-    if (next) {
-      const blot = next[0];
-      isNextBlotLineBreak = blot.statics.blotName === LineBreak.blotName && value === '\n' && this.prevValue === '\n';
-    }
 
-    // the value has '\n' but it is not equal to '\n'.
-    if (value !== '\n' && lineBreakSplit.length > 1) {
-      lineBreakSplit.forEach((splitValue, index) => {
-        if (splitValue !== '') {
-          super.insertAt(offset, splitValue, def);
-          offset += splitValue.length;
-          super.insertAt(offset, LineBreak.blotName, true);
-          offset += 1;
-        } else {
-          // Paragraph
-          if (index !== lineBreakSplit.length - 1) {
-            super.insertAt(offset, '\n', def);
-            offset += 1;
-            isParagraph = true;
-          }
-        }
-      });
-    } else {
-      // Line Break
-      if (this.prevValue !== LineBreak.blotName && this.prevValue !== '\n' && (value === '\n' || value === LineBreak.blotName)) {
-        super.insertAt(offset, LineBreak.blotName, true);
+      if (
+        prev?.[0].statics.blotName === 'text' &&
+        current?.[0].statics.blotName === LineBreak.blotName &&
+        next?.[0].statics.blotName === LineBreak.blotName
+      ) {
+        super.insertAt(index, value, def)
+      } else if (
+        prev?.[0].statics.blotName === 'text' &&
+        current?.[0].statics.blotName === LineBreak.blotName &&
+        next?.[0].statics.blotName === 'text'
+      ) {
+        super.insertAt(index, value, def)
+      } else if (
+        prev?.[0].statics.blotName === LineBreak.blotName &&
+        current?.[0].statics.blotName === LineBreak.blotName &&
+        next?.[0].statics.blotName === 'text'
+      ) {
+        super.insertAt(index, value, def)
+      } else if (
+        prev?.[0].statics.blotName === 'text' &&
+        current?.[0].statics.blotName === LineBreak.blotName &&
+        next?.[0].statics.blotName === undefined
+      ) {
+        super.insertAt(index, value, def)
+      } else if (
+        prev?.[0].statics.blotName === LineBreak.blotName &&
+        current?.[0].statics.blotName === LineBreak.blotName &&
+        next?.[0].statics.blotName === undefined
+      ) {
+        super.insertAt(index - 1, LineBreak.blotName, true);
+      } else if (
+        prev?.[0].statics.blotName === undefined &&
+        current?.[0].statics.blotName === undefined &&
+        next?.[0].statics.blotName === undefined
+      ) {
+        super.insertAt(index - 1, LineBreak.blotName, true);
+      } else if (
+        prev?.[0].statics.blotName === LineBreak.blotName &&
+        current?.[0].statics.blotName === 'block' &&
+        next?.[0].statics.blotName === undefined
+      ) {
+        super.insertAt(index, value, def)
+      } else if (
+        prev?.[0].statics.blotName === 'block' &&
+        current?.[0].statics.blotName === 'block' &&
+        next?.[0].statics.blotName === undefined
+      ) {
+        super.insertAt(index, value, def)
+      } else if (
+        prev?.[0].statics.blotName === LineBreak.blotName &&
+        current?.[0].statics.blotName === LineBreak.blotName &&
+        next?.[0].statics.blotName === LineBreak.blotName
+      ) {
+        super.insertAt(index, value, def)
+      } else if (
+        prev?.[0].statics.blotName === 'break' &&
+        current?.[0].statics.blotName === LineBreak.blotName &&
+        next?.[0].statics.blotName === LineBreak.blotName
+      ) {
+        super.insertAt(index, value, def)
       } else {
-        if (value === '\n') {
-          if (!isNextBlotLineBreak) {
-            isParagraph = true;
-            super.insertAt(index, value, def);
-          } else {
-            super.insertAt(index, LineBreak.blotName, true);
-          }
-        } else {
-          super.insertAt(index, value, def);
-        }
+        super.insertAt(index, LineBreak.blotName, true);
       }
+      return
     }
-    if (isParagraph && !isNextBlotLineBreak) {
-      this.prevValue = '';
-    } else {
-      this.prevValue = value;
-    }
+
+    super.insertAt(index, value, def)
   }
 
-  insertContents (index: number, delta: Delta): void {
+  insertContents(index: number, delta: Delta): void {
     const inserts = delta.ops.map(op => op.insert);
     for (const insert of inserts) {
       if (typeof insert === 'string') {
