@@ -1,6 +1,7 @@
 import { expect } from 'vitest';
 import Quill, { Delta } from 'quill';
 import { createLineBreakQuill } from './createLineBreakQuill';
+import { normalizeLineBreak } from '../../util/normalizeLineBreak';
 
 
 class FromHTML {
@@ -11,7 +12,7 @@ class FromHTML {
   }
 
   isCompatWith (delta: Delta) {
-    expect(delta).toEqual(this.quill.editor.getDelta());
+    expect(delta).toEqual(normalizeLineBreak(this.quill.editor.getDelta()));
     return new FromDelta(delta);
   }
 
@@ -31,7 +32,7 @@ class FromDelta {
   }
 
   isFinallyEq (delta: Delta) {
-    expect(this.quill.editor.getDelta()).toStrictEqual(delta);
+    expect(normalizeLineBreak(this.quill.editor.getDelta())).toStrictEqual(delta);
     return this;
   }
 
