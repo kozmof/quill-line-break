@@ -311,9 +311,10 @@ describe('Key events', () => {
         .isFinallyEq(
           new Delta().insert('Hello Quill\n\n\n\n\n')
         )
-        .toBe('<p>Hello Quill<br class="ql-line-break"></p><p><br></p><p><br class="ql-line-break"></p>')
+        .toBe('<p>Hello Quill<br class="ql-line-break"></p><p><br class="ql-line-break"><br class="ql-line-break"></p>')
+        // remove the last '\n'
         .isCompatWith(
-          new Delta().insert('Hello Quill\n\n\n\n\n\n')
+          new Delta().insert('Hello Quill\n\n\n\n')
         );
     });
 
@@ -325,9 +326,9 @@ describe('Key events', () => {
         .isFinallyEq(
           new Delta().insert('Hello Quill\n\n\n\n\n\n')
         )
-        .toBe('<p>Hello Quill<br class="ql-line-break"></p><p><br></p><p><br></p><p><br class="ql-line-break"></p>')
+        .toBe('<p>Hello Quill<br class="ql-line-break"></p><p><br class="ql-line-break"><br class="ql-line-break"><br class="ql-line-break"></p>')
         .isCompatWith(
-          new Delta().insert('Hello Quill\n\n\n\n\n\n\n\n')
+          new Delta().insert('Hello Quill\n\n\n\n\n\n')
         );
     });
   });
@@ -385,9 +386,9 @@ describe('paste text', () => {
     inspect(new Delta())
       .focus()
       .paste(clipboardEvent)
-      .toBe('<p>line1<br class="ql-line-break"></p><p><br></p><p>line2</p>')
+      .toBe('<p>line1<br class="ql-line-break"></p><p><br class="ql-line-break">line2</p>')
       .isCompatWith(
-        new Delta().insert('line1\n\n\n\nline2\n\n')
+        new Delta().insert('line1\n\n\nline2\n\n')
       );
   });
 
@@ -404,9 +405,9 @@ describe('paste text', () => {
     inspect(new Delta())
       .focus()
       .paste(clipboardEvent)
-      .toBe('<p>line1<br class="ql-line-break"></p><p><br></p><p><br></p><p>line2</p>')
+      .toBe('<p>line1<br class="ql-line-break"></p><p><br class="ql-line-break"><br class="ql-line-break">line2</p>')
       .isCompatWith(
-        new Delta().insert('line1\n\n\n\n\n\nline2\n\n')
+        new Delta().insert('line1\n\n\n\nline2\n\n')
       );
   });
 });
@@ -463,9 +464,9 @@ describe('paste html', () => {
     inspect(new Delta())
       .focus()
       .paste(clipboardEvent)
-      .toBe('<p>line1<br class="ql-line-break"></p><p><br></p><p>line2</p>')
+      .toBe('<p>line1<br class="ql-line-break"></p><p><br class="ql-line-break">line2</p>')
       .isCompatWith(
-        new Delta().insert('line1\n\n\n\nline2\n\n')
+        new Delta().insert('line1\n\n\nline2\n\n')
       );
   });
 
@@ -482,9 +483,9 @@ describe('paste html', () => {
     inspect(new Delta())
       .focus()
       .paste(clipboardEvent)
-      .toBe('<p>line1<br class="ql-line-break"></p><p><br></p><p><br></p><p>line2</p>')
+      .toBe('<p>line1<br class="ql-line-break"></p><p><br class="ql-line-break"><br class="ql-line-break">line2</p>')
       .isCompatWith(
-        new Delta().insert('line1\n\n\n\n\n\nline2\n\n')
+        new Delta().insert('line1\n\n\n\nline2\n\n')
       );
   });
 });

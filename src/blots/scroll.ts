@@ -20,7 +20,6 @@ export class LineBreakScroll extends Scroll {
       const current = this.path(index).pop();
       const prev = this.path(index - 1).pop();
 
-
       if (
         prev?.[0].statics.blotName === 'text' &&
         current?.[0].statics.blotName === LineBreak.blotName &&
@@ -43,42 +42,6 @@ export class LineBreakScroll extends Scroll {
         prev?.[0].statics.blotName === 'text' &&
         current?.[0].statics.blotName === LineBreak.blotName &&
         next?.[0].statics.blotName === undefined
-      ) {
-        super.insertAt(index, value, def)
-      } else if (
-        prev?.[0].statics.blotName === LineBreak.blotName &&
-        current?.[0].statics.blotName === LineBreak.blotName &&
-        next?.[0].statics.blotName === undefined
-      ) {
-        super.insertAt(index - 1, LineBreak.blotName, true);
-      } else if (
-        prev?.[0].statics.blotName === undefined &&
-        current?.[0].statics.blotName === undefined &&
-        next?.[0].statics.blotName === undefined
-      ) {
-        super.insertAt(index - 1, LineBreak.blotName, true);
-      } else if (
-        prev?.[0].statics.blotName === LineBreak.blotName &&
-        current?.[0].statics.blotName === 'block' &&
-        next?.[0].statics.blotName === undefined
-      ) {
-        super.insertAt(index, value, def)
-      } else if (
-        prev?.[0].statics.blotName === 'block' &&
-        current?.[0].statics.blotName === 'block' &&
-        next?.[0].statics.blotName === undefined
-      ) {
-        super.insertAt(index, value, def)
-      } else if (
-        prev?.[0].statics.blotName === LineBreak.blotName &&
-        current?.[0].statics.blotName === LineBreak.blotName &&
-        next?.[0].statics.blotName === LineBreak.blotName
-      ) {
-        super.insertAt(index, value, def)
-      } else if (
-        prev?.[0].statics.blotName === 'break' &&
-        current?.[0].statics.blotName === LineBreak.blotName &&
-        next?.[0].statics.blotName === LineBreak.blotName
       ) {
         super.insertAt(index, value, def)
       } else {
