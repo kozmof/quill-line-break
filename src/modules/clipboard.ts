@@ -34,26 +34,28 @@ const lineBreakMatchBlot = (node: Node, delta: Delta, scroll: ScrollBlot) => {
 };
 
 export class LineBreakClipboard extends Clipboard {
-  constructor(quill: Quill, options: Partial<ClipboardOptions>) {
+  constructor (quill: Quill, options: Partial<ClipboardOptions>) {
     super(quill, options);
     this.matchers = this.matchers.filter(value => value[1].name !== 'matchBlot');
     this.matchers.push([Node.ELEMENT_NODE, lineBreakMatchBlot]);
   }
 
-  private getText(range?: Range) {
+  private getText (range?: Range) {
     if (range) {
       return normalizeLineBreak(this.quill.editor.getContents(range.index, range.length))
         .filter((op) => typeof op.insert === 'string')
         .map((op) => op.insert)
         .join('');
     } else {
-      return ''
+      return '';
     }
   }
 
-  onCopy(range: Range, _: boolean): { html: string; text: string; } {
+  onCopy (range: Range): { html: string;
+    text: string; } {
     const text = this.getText(range);
     const html = this.quill.getSemanticHTML(range);
-    return { html, text };
+    return { html,
+      text };
   }
 }

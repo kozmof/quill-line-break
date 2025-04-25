@@ -8,7 +8,7 @@ export class LineBreak extends EmbedBlot {
   static tagName = 'br';
 
   value () {
-    return {[LineBreak.blotName] : true};
+    return { [LineBreak.blotName]: true };
   }
 
   length (): number {
