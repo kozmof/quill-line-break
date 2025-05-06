@@ -578,11 +578,12 @@ describe('undo/redo', () => {
       .redo(3)
       .undo(1)
       .redo(2)
-      .getSelection()
+      .getSelection();
     
     expect(selection)
-      .toEqual({ index: 13, length: 0 })
-  })
+      .toEqual({ index: 13,
+        length: 0 });
+  });
 
   test('DOM', () => {
     inspect(new Delta())
@@ -605,6 +606,6 @@ describe('undo/redo', () => {
       .redo(5)
       .undo(6)
       .redo(6)
-      .toBe('<p>aaa<br class="ql-line-break"></p><p>bbb<br class="ql-line-break">ccc<br class="ql-line-break"></p>')
-  })
-})
+      .toBe('<p>aaa<br class="ql-line-break"></p><p>bbb<br class="ql-line-break">ccc<br class="ql-line-break"></p>');
+  });
+});

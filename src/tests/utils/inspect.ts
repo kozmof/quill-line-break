@@ -93,7 +93,7 @@ class FromDelta {
   }
 
   insert (index: number, text: string) {
-    this.quill.insertText(index, text)
+    this.quill.insertText(index, text);
     return this;
   }
 
