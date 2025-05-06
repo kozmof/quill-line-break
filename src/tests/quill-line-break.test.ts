@@ -342,7 +342,7 @@ describe('paste text', () => {
           type === 'text/html' ? '' : 'line1\nline2'
       },
       preventDefault: () => {
-        return; 
+        return;
       }
     } as ClipboardEvent;
     inspect(new Delta())
@@ -361,7 +361,7 @@ describe('paste text', () => {
           type === 'text/html' ? '' : 'line1\n\nline2'
       },
       preventDefault: () => {
-        return; 
+        return;
       }
     } as ClipboardEvent;
     inspect(new Delta())
@@ -380,7 +380,7 @@ describe('paste text', () => {
           type === 'text/html' ? '' : 'line1\n\n\nline2'
       },
       preventDefault: () => {
-        return; 
+        return;
       }
     } as ClipboardEvent;
     inspect(new Delta())
@@ -399,7 +399,7 @@ describe('paste text', () => {
           type === 'text/html' ? '' : 'line1\n\n\n\nline2'
       },
       preventDefault: () => {
-        return; 
+        return;
       }
     } as ClipboardEvent;
     inspect(new Delta())
@@ -420,7 +420,7 @@ describe('paste html', () => {
           type === 'text/html' ? 'line1<br>line2' : ''
       },
       preventDefault: () => {
-        return; 
+        return;
       }
     } as ClipboardEvent;
     inspect(new Delta())
@@ -439,7 +439,7 @@ describe('paste html', () => {
           type === 'text/html' ? 'line1<br/><br>line2' : ''
       },
       preventDefault: () => {
-        return; 
+        return;
       }
     } as ClipboardEvent;
     inspect(new Delta())
@@ -458,7 +458,7 @@ describe('paste html', () => {
           type === 'text/html' ? 'line1<br><br/><br>line2' : ''
       },
       preventDefault: () => {
-        return; 
+        return;
       }
     } as ClipboardEvent;
     inspect(new Delta())
@@ -477,7 +477,7 @@ describe('paste html', () => {
           type === 'text/html' ? 'line1<br/><br><br/><br/>line2' : ''
       },
       preventDefault: () => {
-        return; 
+        return;
       }
     } as ClipboardEvent;
     inspect(new Delta())
@@ -500,11 +500,13 @@ describe('copy', () => {
         }
       },
       preventDefault: () => {
-        return; 
+        return;
       }
     } as ClipboardEvent;
-    return { clipboardData,
-      clipboardEvent };
+    return {
+      clipboardData,
+      clipboardEvent
+    };
   };
 
   test('copy 1', () => {
@@ -559,3 +561,50 @@ describe('copy', () => {
     expect(clipboardData['text/plain']).toBe('Hello\n\n\n\nQuill');
   });
 });
+
+describe('undo/redo', () => {
+  test('selection', () => {
+    const selection = inspect(new Delta())
+      .insert(0, 'aaa')
+      .select(3, 0)
+      .pressEnter(2)
+      .insert(5, 'bbb')
+      .select(8, 0)
+      .pressEnter(1)
+      .insert(9, 'ccc')
+      .undo(3)
+      .redo(1)
+      .undo(2)
+      .redo(3)
+      .undo(1)
+      .redo(2)
+      .getSelection()
+    
+    expect(selection)
+      .toEqual({ index: 13, length: 0 })
+  })
+
+  test('DOM', () => {
+    inspect(new Delta())
+      .insert(0, 'aaa')
+      .select(3, 0)
+      .pressEnter(2)
+      .insert(5, 'bbb')
+      .select(8, 0)
+      .pressEnter(1)
+      .insert(9, 'ccc')
+      .undo(1)
+      .redo(1)
+      .undo(2)
+      .redo(2)
+      .undo(3)
+      .redo(3)
+      .undo(4)
+      .redo(4)
+      .undo(5)
+      .redo(5)
+      .undo(6)
+      .redo(6)
+      .toBe('<p>aaa<br class="ql-line-break"></p><p>bbb<br class="ql-line-break">ccc<br class="ql-line-break"></p>')
+  })
+})

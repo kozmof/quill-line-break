@@ -74,6 +74,29 @@ class FromDelta {
     return this;
   }
 
+  undo (counts: number) {
+    for (let i = 0; i < counts; i++) {
+      this.quill.history.undo();
+    }
+    return this;
+  }
+
+  redo (counts: number) {
+    for (let i = 0; i < counts; i++) {
+      this.quill.history.redo();
+    }
+    return this;
+  }
+
+  getSelection () {
+    return this.quill.getSelection();
+  }
+
+  insert (index: number, text: string) {
+    this.quill.insertText(index, text)
+    return this;
+  }
+
   debug () {
     console.log('Delta:', JSON.stringify(this.quill.editor.getDelta()));
     console.log('DOM:', this.quill.root.innerHTML);

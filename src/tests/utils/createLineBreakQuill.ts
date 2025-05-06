@@ -16,6 +16,9 @@ export const createLineBreakQuill = (defaultHTML?: string): Quill => {
     modules: {
       keyboard: {
         bindings: bindings
+      },
+      history: {
+        delay: 0
       }
     }
   });
