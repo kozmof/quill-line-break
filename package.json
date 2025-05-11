@@ -3,21 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "keywords": [
-    "Quill",
-    "quill",
-    "Editor",
-    "editor",
-    "WYSIWYG",
-    "wysiwyg",
-    "wrapper",
-    "text editor",
-    "rich text",
-    "line",
-    "text",
-    "break",
-    "newline"
-  ],
+  "keywords": [],
   "homepage": "https://github.com/kozmof/quill-line-break",
   "repository": {
     "type": "github",
